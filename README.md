@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ShopEZ - E-Commerce Platform
 
 A full-stack e-commerce application built with **Node.js + Express + MongoDB** (backend) and **React** (frontend).
@@ -194,3 +195,6 @@ Work is split by **feature domain** — each member owns their feature end-to-en
 
 ## API Docs
 See [`docs/API-docs.md`](docs/API-docs.md) — to be filled in by the backend team.
+=======
+# smartbridge
+>>>>>>> 63d9d8fb249e3caa601732185696d4dec95d29dc
