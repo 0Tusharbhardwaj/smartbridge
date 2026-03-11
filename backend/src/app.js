@@ -2,6 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const { errorHandler } = require('./middleware/errorHandler');
+const connectDB = require('./config/db');
+
+// Initialize database connection for Vercel serverless execution
+connectDB();
 
 // Route imports — team fills these in as routes are built
 const authRoutes    = require('./routes/authRoutes');
