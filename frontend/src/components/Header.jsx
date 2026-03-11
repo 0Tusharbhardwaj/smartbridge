@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Search, User, ShoppingCart, Menu,Edit,Trash2 } from 'lucide-react';
+import { Search, User, ShoppingCart, Menu, Edit, Trash2 } from 'lucide-react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import Cart from './Cart';
 import { useNavigate } from 'react-router-dom';
 import './Header.css';
 import DeleteProduct from './adminDeleteProduct';
-export default function Header(isAdmin ) {
+export default function Header(isAdmin) {
   const navigate = useNavigate();
-  const [raj, setRaj] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
@@ -45,11 +45,11 @@ export default function Header(isAdmin ) {
     navigate(`/product/${id}`);
     setResults([]);
   }
-  const deleteBtn = (e,id) => {
+  const deleteBtn = (e, id) => {
     e.stopPropagation();
     setDeletePopup(true);
   };
-  
+
   const Editbtn = (id, e) => {
     e.stopPropagation();
     navigate(`/update/${id}`);
@@ -76,10 +76,10 @@ export default function Header(isAdmin ) {
 
   useEffect(() => {
     if (Cookies.get('username')) {
-      setRaj(true);
+      setIsLoggedIn(true);
       setUsername(Cookies.get('username'));
     } else {
-      setRaj(false);
+      setIsLoggedIn(false);
     }
   }, []);
 
@@ -103,7 +103,7 @@ export default function Header(isAdmin ) {
     if (Cookies.get('username')) {
       await axios.post('/api/logout');
       Cookies.remove('username');
-      setRaj(false);
+      setIsLoggedIn(false);
       setIsProfileMenuOpen(false);
       window.location.reload();
       navigate('/');
@@ -118,7 +118,7 @@ export default function Header(isAdmin ) {
   };
 
   const checkforlogin = () => {
-    if (!raj) {
+    if (!isLoggedIn) {
       navigate('/authpage');
     } else {
       toggleProfileMenu();
@@ -137,80 +137,80 @@ export default function Header(isAdmin ) {
 
   return (
     <header className="header66 header-container">
-        <div className="logo-section">
-          <p className="logo">APARNA DISTRIBUTORS</p>
+      <div className="logo-section">
+        <p className="logo">APARNA DISTRIBUTORS</p>
+      </div>
+      <div className="search-section">
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder="Search Products..."
+            className="search-input"
+            onChange={handleSearch}
+          />
+          <button className="search-button">
+            <Search size={20} />
+          </button>
         </div>
-        <div className="search-section">
-          <div className="search-container">
-            <input
-              type="text"
-              placeholder="Search Products..."
-              className="search-input"
-              onChange={handleSearch}
-            />
-            <button className="search-button">
-              <Search size={20} />
-            </button>
-          </div>
-          {results.length > 0 && (
-            <div className="search-results">
-              <ul>
-                {results.map((product) => (
-                  <li key={product._id} onClick={() => gotoproduct(product._id)}>
+        {results.length > 0 && (
+          <div className="search-results">
+            <ul>
+              {results.map((product) => (
+                <li key={product._id} onClick={() => gotoproduct(product._id)}>
                   {product.productName}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   {isAdmin.isAdmin.isAdmin && (
                     <>
-                      <button 
-                        className="edit-btn11" 
+                      <button
+                        className="edit-btn11"
                         onClick={(e) => Editbtn(product._id, e)}
                       >
                         <Edit size={16} />
                       </button>&nbsp;&nbsp;
-                      <button 
-                        className="delete-btn11" 
-                        onClick={(e) => deleteBtn( e,product._id)}
+                      <button
+                        className="delete-btn11"
+                        onClick={(e) => deleteBtn(e, product._id)}
                       >
                         <Trash2 size={16} />
                       </button>
                     </>
                   )}
-                   {deletePopup && (
-            <DeleteProduct 
-              productName={product.productName} 
-              id={product._id} 
-              onClose={() => setDeletePopup(false)} 
-            />
-          )}
+                  {deletePopup && (
+                    <DeleteProduct
+                      productName={product.productName}
+                      id={product._id}
+                      onClose={() => setDeletePopup(false)}
+                    />
+                  )}
                 </li>
-                ))}
-              </ul>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+      <nav className={`nav-section ${isMobileMenuOpen ? 'mobile-menu-open' : ''}`}>
+        {isAdmin.isAdmin.isAdmin ? (
+          <button onClick={gotoTodaysorders} className="nav-button">Today's Orders</button>
+        ) : (
+          <button onClick={() => gotoMyorders(username)} className="nav-button">My Orders</button>
+        )}
+
+        <div className="profile-section">
+          <button onClick={checkforlogin} className="profile-button">
+            <User size={24} />
+            <span>{isLoggedIn ? username : 'Login'}</span>
+          </button>
+          {isProfileMenuOpen && (
+            <div className="profile-menu">
+              <a href="#" className="profile-menu-item">Your Profile</a>
+              <a href="#" onClick={logClick} className="profile-menu-item">Log Out</a>
             </div>
           )}
         </div>
-        <nav className={`nav-section ${isMobileMenuOpen ? 'mobile-menu-open' : ''}`}>
-        {isAdmin.isAdmin.isAdmin ? (
-  <button onClick={gotoTodaysorders} className="nav-button">Today's Orders</button>
-) : (
-  <button onClick={() => gotoMyorders(username)} className="nav-button">My Orders</button>
-)}
-
-          <div className="profile-section">
-            <button onClick={checkforlogin} className="profile-button">
-              <User size={24} />
-              <span>{raj ? username : 'Login'}</span>
-            </button>
-            {isProfileMenuOpen && (
-              <div className="profile-menu">
-                <a href="#" className="profile-menu-item">Your Profile</a>
-                <a href="#" onClick={logClick} className="profile-menu-item">Log Out</a>
-              </div>
-            )}
-          </div>
-          <button onClick={cartrefresh} className="cart-button">
-            <ShoppingCart size={24} />
-            {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
-          </button>
-        </nav>
+        <button onClick={cartrefresh} className="cart-button">
+          <ShoppingCart size={24} />
+          {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+        </button>
+      </nav>
       <Cart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </header>
   );
