@@ -59,3 +59,27 @@
   color: #666;
   padding: 2rem;
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .hero {
+    padding: 3rem 1rem;
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  .featured-section {
+    padding: 2rem 1rem;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+}
