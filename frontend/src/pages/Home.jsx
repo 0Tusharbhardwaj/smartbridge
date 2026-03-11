@@ -45,10 +45,10 @@ const Home = (isAdmin) => {
     const fetchProducts = async () => {
       setIsLoading(true);
       try {
-        const haldiramProducts = await getProductsByCategory('Haldiram');
-        const g2Products = await getProductsByCategory('G2');
+        const electronicsProducts = await getProductsByCategory('Electronics');
+        const footwearProducts = await getProductsByCategory('Footwear');
 
-        const allProducts = [...haldiramProducts, ...g2Products];
+        const allProducts = [...electronicsProducts, ...footwearProducts];
         setProducts(allProducts);
       } catch (error) {
         console.log('Error fetching products: ', error);

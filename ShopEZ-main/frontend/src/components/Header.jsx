@@ -8,7 +8,7 @@ import './Header.css';
 import DeleteProduct from './adminDeleteProduct';
 export default function Header(isAdmin ) {
   const navigate = useNavigate();
-  const [raj, setRaj] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
@@ -76,10 +76,10 @@ export default function Header(isAdmin ) {
 
   useEffect(() => {
     if (Cookies.get('username')) {
-      setRaj(true);
+      setIsLoggedIn(true);
       setUsername(Cookies.get('username'));
     } else {
-      setRaj(false);
+      setIsLoggedIn(false);
     }
   }, []);
 
@@ -103,7 +103,7 @@ export default function Header(isAdmin ) {
     if (Cookies.get('username')) {
       await axios.post('/api/logout');
       Cookies.remove('username');
-      setRaj(false);
+      setIsLoggedIn(false);
       setIsProfileMenuOpen(false);
       window.location.reload();
       navigate('/');
@@ -118,7 +118,7 @@ export default function Header(isAdmin ) {
   };
 
   const checkforlogin = () => {
-    if (!raj) {
+    if (!isLoggedIn) {
       navigate('/authpage');
     } else {
       toggleProfileMenu();
@@ -197,7 +197,7 @@ export default function Header(isAdmin ) {
           <div className="profile-section">
             <button onClick={checkforlogin} className="profile-button">
               <User size={24} />
-              <span>{raj ? username : 'Login'}</span>
+              <span>{isLoggedIn ? username : 'Login'}</span>
             </button>
             {isProfileMenuOpen && (
               <div className="profile-menu">

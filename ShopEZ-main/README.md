@@ -163,7 +163,7 @@ Authpage.jsx
 
 ---
 
-# Rajiv – Products & Catalog
+# tushar bhardwaj – Products & Catalog
 
 ### Backend Files
 
@@ -377,7 +377,7 @@ The `-f` option forcefully replaces the existing repository content.
 # Contributors
 
 - **Satyam** – Authentication & User Management  
-- **Rajiv** – Products & Catalog  
+- **tushar bhardwaj** – Products & Catalog  
 - **Tanvi** – Cart & Checkout / Payment  
 - **Saniya** – Orders & Admin Management  
 

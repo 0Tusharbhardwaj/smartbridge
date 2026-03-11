@@ -87,6 +87,9 @@ const Footer = () => {
             </div>
           </div>
         </div>
+        <div className="footer-bottom" style={{ textAlign: 'center', marginTop: '30px', borderTop: '1px solid #ddd', paddingTop: '20px' }}>
+          <p>Made by <strong>tushar bhardwaj</strong></p>
+        </div>
       </div>
     </footer>
   );

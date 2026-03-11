@@ -433,8 +433,7 @@ http://localhost:8000/api
 
 ## 📝 Project Authors
 
-- **Raj**
-- **Vallabh**
+- **tushar bhardwaj**
 
 ---
 
