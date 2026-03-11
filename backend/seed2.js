@@ -46,7 +46,7 @@ const sampleProducts = [
 
 async function seedDB() {
   try {
-    await mongoose.connect('mongodb://localhost:27017/shopez');
+    await mongoose.connect('mongodb+srv://tushar_bhardwaj:Tushar%40123@cluster0.fn39ozw.mongodb.net/shopez?retryWrites=true&w=majority');
     console.log('Connected to MongoDB');
     await Product.deleteMany({});
     console.log('Cleared existing products');
